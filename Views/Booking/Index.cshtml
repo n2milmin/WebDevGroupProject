@@ -22,6 +22,9 @@
             <th>
                 Booking End
             </th>
+            <th>
+                
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,9 +32,17 @@
         {
             <tr>
                 <td>@booking.Title</td>
+            </tr>
+            <tr>
                 <td>@booking.Description</td>
+            </tr>
+            <tr>
                 <td>@booking.Price</td>
+            </tr>
+            <tr>
                 <td>@booking.BookingStart.ToShortDateString()</td>
+            </tr>
+            <tr>
                 <td>@booking.BookingEnd.ToShortDateString()</td>
             </tr>
         }

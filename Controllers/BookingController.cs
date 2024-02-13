@@ -32,9 +32,10 @@ namespace WebDevGroupProject.Controllers
             return View(booking);
         }
 
-        
-        public IActionResult Create()
+
+        public IActionResult Create(int flightId)
         {
+            ViewData["FlightId"] = flightId;
             return View();
         }
 
