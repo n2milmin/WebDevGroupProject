@@ -41,17 +41,10 @@ namespace WebDevGroupProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(int flightId, [Bind("Id,Title,Description,Price,BookingStart,BookingEnd")] Booking booking)
+        public IActionResult Create([Bind("Id,Title,Description,Price,BookingStart,BookingEnd")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                var flight = _db.Flights.FirstOrDefault(f => f.FlightId == flightId);
-                if (flight == null)
-                {
-                    return NotFound();
-                }
-                booking.Flight = flight;
-                booking.FlightId = flightId;
                 _db.Add(booking);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));

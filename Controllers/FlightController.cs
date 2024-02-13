@@ -40,27 +40,15 @@ namespace WebDevGroupProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(int flightId, [Bind("Id,Title,Description,Price,BookingStart,BookingEnd")] Booking booking)
+        public IActionResult Create([Bind("FlightId,Airlines,Departure,Arrival,Prices")] Flights flight)
         {
             if (ModelState.IsValid)
             {
-                // Find the flight by id
-                var flight = _db.Flights.FirstOrDefault(f => f.FlightId == flightId);
-                if (flight == null)
-                {
-                    return NotFound();
-                }
-
-                // Associate the booking with the flight
-                booking.Flight = flight;
-                booking.FlightId = flightId;
-
-                // Add booking to database
-                _db.Add(booking);
+                _db.Add(flight);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(booking);
+            return View(flight);
         }
 
 
@@ -76,12 +64,9 @@ namespace WebDevGroupProject.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(int id, [Bind("FlightId,Airlines,Departure,Arrival,Prices")] Flights flight)
 		{
-			if (id != flight.FlightId)
-			{
-				return NotFound();
-			}
+			if (id != flight.FlightId) return NotFound();
 
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
 			{
 				try
 				{

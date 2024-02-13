@@ -4,4 +4,36 @@
 }
 
 <h1>Index</h1>
-
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Booking Start
+            </th>
+            <th>
+                Booking End
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.Title</td>
+                <td>@booking.Description</td>
+                <td>@booking.Price</td>
+                <td>@booking.BookingStart.ToShortDateString()</td>
+                <td>@booking.BookingEnd.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -12,7 +12,5 @@ namespace WebDevGroupProject.Models
         public DateTime BookingStart { get; set; }
         [DataType(DataType.Date)]
         public DateTime BookingEnd { get; set; }
-        public int? FlightId { get; set; }
-        public Flights? Flight { get; set; }
     }
 }
