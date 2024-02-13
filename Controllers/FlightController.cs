@@ -16,14 +16,14 @@ namespace WebDevGroupProject.Controllers
 			_db = db;
 		}
 
-		// GET: Flights
+
 		public IActionResult Index()
 		{
 			var flights = _db.Flights.ToList();
 			return View(flights);
 		}
 
-		// GET: Flights/Details/5
+		
 		public IActionResult Details(int? id)
 		{
 			var flight = _db.Flights.FirstOrDefault(m => m.FlightId == id);
@@ -31,35 +31,47 @@ namespace WebDevGroupProject.Controllers
 			return View(flight);
 		}
 
-		// GET: Flights/Create
+
 		public IActionResult Create()
 		{
 			return View();
 		}
 
-		// POST: Flights/Create
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Create([Bind("FlightId,Airlines,Departure,Arrival,Prices")] Flights flight)
-		{
-			if (ModelState.IsValid)
-			{
-				_db.Add(flight);
-				_db.SaveChanges();
-				return RedirectToAction(nameof(Index));
-			}
-			return View(flight);
-		}
 
-		// GET: Flights/Edit/5
-		public IActionResult Edit(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(int flightId, [Bind("Id,Title,Description,Price,BookingStart,BookingEnd")] Booking booking)
+        {
+            if (ModelState.IsValid)
+            {
+                // Find the flight by id
+                var flight = _db.Flights.FirstOrDefault(f => f.FlightId == flightId);
+                if (flight == null)
+                {
+                    return NotFound();
+                }
+
+                // Associate the booking with the flight
+                booking.Flight = flight;
+                booking.FlightId = flightId;
+
+                // Add booking to database
+                _db.Add(booking);
+                _db.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(booking);
+        }
+
+
+        public IActionResult Edit(int? id)
 		{
 			var flight = _db.Flights.Find(id);
 			if (flight == null) return NotFound();
 			return View(flight);
 		}
 
-		// POST: Flights/Edit/5
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(int id, [Bind("FlightId,Airlines,Departure,Arrival,Prices")] Flights flight)
@@ -96,7 +108,7 @@ namespace WebDevGroupProject.Controllers
 			return _db.Flights.Any(e => e.FlightId == id);
 		}
 
-		// GET: Flights/Delete/5
+
 		public IActionResult Delete(int? id)
 		{
 			if (id == null)
@@ -110,7 +122,7 @@ namespace WebDevGroupProject.Controllers
 			return View(flight);
 		}
 
-		// POST: Flights/Delete/5
+
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public IActionResult DeleteConfirmed(int id)
