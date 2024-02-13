@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebDevGroupProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240213002908_AddBooking")]
-    partial class AddBooking
+    [Migration("20240213145319_Booking")]
+    partial class Booking
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,15 +32,18 @@ namespace WebDevGroupProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("BookingEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("BookingStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Till")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -48,7 +51,7 @@ namespace WebDevGroupProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Booking");
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("WebDevGroupProject.Models.Flights", b =>
