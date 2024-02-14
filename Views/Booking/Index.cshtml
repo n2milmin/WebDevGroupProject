@@ -31,19 +31,21 @@
         @foreach (var booking in Model)
         {
             <tr>
-                <td>@booking.Title</td>
-            </tr>
-            <tr>
-                <td>@booking.Description</td>
-            </tr>
-            <tr>
-                <td>@booking.Price</td>
-            </tr>
-            <tr>
-                <td>@booking.BookingStart.ToShortDateString()</td>
-            </tr>
-            <tr>
-                <td>@booking.BookingEnd.ToShortDateString()</td>
+                <td>
+                    @booking.Title
+                </td>
+                <td>
+                    @booking.Description
+                </td>
+                <td>
+                    @booking.Price
+                </td>
+                <td>
+                    @booking.BookingStart.ToShortDateString()
+                </td>
+                <td>
+                    @booking.BookingEnd.ToShortDateString()
+                </td>
             </tr>
         }
 

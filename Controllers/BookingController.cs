@@ -33,9 +33,11 @@ namespace WebDevGroupProject.Controllers
         }
 
 
-        public IActionResult Create(int flightId)
+        public IActionResult Create(int flightId, DateTime Departure, DateTime Arrival)
         {
             ViewData["FlightId"] = flightId;
+            ViewData["Departure"] = Departure;
+            ViewData["Arrival"] = Arrival;
             return View();
         }
 
