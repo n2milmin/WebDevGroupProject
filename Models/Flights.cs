@@ -2,15 +2,23 @@
 
 namespace WebDevGroupProject.Models
 {
-    public class Flights
+    public class Flight
     {
-        [Key]
+        [Required]
         public int FlightId { get; set; }
-        public string Airlines { get; set;}
-        [DataType(DataType.Date)]
-        public DateTime Departure { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime Arrival { get; set; }
-        public int Prices { get; set; }
+        
+        [Display(Name = "Airline")]
+        public string Airline { get; set; }
+
+        [Display(Name = "Departure Time")]
+        [DataType(DataType.Time)]
+        public DateTime DepartureTime { get; set; }
+
+        [Display(Name = "Arrival Time")]
+        [DataType(DataType.Time)]
+        public DateTime ArrivalTime { get; set; }
+
+        [Display(Name = "Price")]
+        public double Price { get; set; }
     }
 }

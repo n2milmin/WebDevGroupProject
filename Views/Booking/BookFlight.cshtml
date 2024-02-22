@@ -1,0 +1,22 @@
+﻿@model WebDevGroupProject.Models.Booking
+
+@{
+    ViewBag.Title = "Book Flight";
+}
+
+<h2>Book Flight</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.ServiceId) 
+    <div class="form-group">
+        @Html.LabelFor(model => model.PassengerName)
+        @Html.TextBoxFor(model => model.PassengerName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.PassengerName)
+    </div>
+    <button type="submit" class="btn btn-primary">Book Flight</button>
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

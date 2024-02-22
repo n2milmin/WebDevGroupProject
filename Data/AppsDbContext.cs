@@ -8,6 +8,6 @@ public class AppDbContext : DbContext
     {
 
     }
-    public DbSet<Flights> Flights { get; set; }
+    public DbSet<Flight> Flights { get; set; }
     public DbSet<Booking> Bookings { get; set; }
 }

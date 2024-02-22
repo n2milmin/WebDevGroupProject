@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebDevGroupProject.Models;
 
 namespace WebDevGroupProject.Controllers
@@ -14,111 +12,37 @@ namespace WebDevGroupProject.Controllers
             _db = db;
         }
 
-        
-        public IActionResult Index()
-        {
-            var bookings = _db.Bookings.ToList();
-            return View(bookings);
-        }
-
-        
-        public IActionResult Details(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var booking = _db.Bookings.FirstOrDefault(m => m.Id == id);
-            if (booking == null) return NotFound();
-
-            return View(booking);
-        }
-
-
-        public IActionResult Create(int flightId, DateTime Departure, DateTime Arrival)
-        {
-            ViewData["FlightId"] = flightId;
-            ViewData["Departure"] = Departure;
-            ViewData["Arrival"] = Arrival;
+        [HttpGet]
+        public ActionResult BookFlight(int id)
+        {            
+            Flight flight = _db.Flights.Find(id);
+            if (flight == null) return NotFound(); 
+            ViewBag.ServiceType = "Flight";
+            ViewBag.ServiceId = id;
             return View();
         }
 
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Title,Description,Price,BookingStart,BookingEnd")] Booking booking)
+        public ActionResult BookFlight(int id, string passengerName)
         {
-            if (ModelState.IsValid)
+            Flight flight = _db.Flights.Find(id);
+            Booking booking = new Booking
             {
-                _db.Add(booking);
-                _db.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(booking);
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Title,Description,Price,BookingStart,BookingEnd")] Booking booking)
-        {
-            if (id != booking.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _db.Update(booking);
-                    _db.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    if (!BookingExists(booking.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(booking);
-        }
-
-        
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var booking = _db.Bookings.FirstOrDefault(m => m.Id == id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
-
-            return View(booking);
-        }
-
-        
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var booking = _db.Bookings.Find(id);
-            _db.Bookings.Remove(booking);
+                ServiceType = "Flight",
+                ServiceId = id,
+                PassengerName = passengerName,
+                BookingDateTime = flight.DepartureTime
+            };
+            _db.Bookings.Add(booking);
             _db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {id}.";
+            return RedirectToAction("Confirmation");
         }
 
-        private bool BookingExists(int id)
+        [HttpGet]
+        public ActionResult Confirmation()
         {
-            return _db.Bookings.Any(e => e.Id == id);
+            return View();
         }
     }
 }
