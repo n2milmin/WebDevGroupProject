@@ -1,7 +1,24 @@
-﻿
+﻿@model Search
 @{
-    ViewData["Title"] = "Search";
+	ViewData["Title"] = "Search";
 }
 
 <h1>Search</h1>
 
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+	<label asp-for="searchType" class="control-label">Search Type</label>
+	<select asp-for="searchType" class="form-control">
+		<option value="">Select Search Type</option>
+		<option value="Flight">Flight</option>
+		<option value="Hotel">Hotel</option>
+		<option value="CarRental">Car Rental</option>
+	</select>
+	<span asp-validation-for="searchType" class="text-danger"></span>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
