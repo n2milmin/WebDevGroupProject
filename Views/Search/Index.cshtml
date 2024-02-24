@@ -1,7 +1,30 @@
-﻿
+﻿@model Search
 @{
-    ViewData["Title"] = "Search";
+	ViewData["Title"] = "Search";
 }
 
 <h1>Search</h1>
 
+
+<form class="form-group" method="get">
+	<textarea class="d-inline" asp-for="searchValue" placeholder="Search by keyword"></textarea>
+
+	<select class="form-control btn btn-outline dropdown-toggle" placeholder="Select Type" name="searchType">
+		<option value="">Select Type</option>
+		<option value="Flights">Flights</option>
+		<option value="Hotels">Hotels</option>
+		<option value="CarRentals">Car Rentals</option>
+	</select>
+
+	<textarea class="d-inline" asp-for="location" placeholder="Location"></textarea>
+	<textarea class="d-inline" asp-for="carModel" placeholder="Car Model"></textarea>
+
+	<button class="btn btn-primary" asp-controller="Search" asp-action="GeneralSearch" type="submit">Search</button>
+</form>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

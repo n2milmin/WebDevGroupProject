@@ -1,0 +1,71 @@
+﻿@model List<Flight>
+@{
+    ViewData["Title"] = "Flights";
+}
+<h2>Flights</h2>
+
+<!-- Nicole's -->
+<form asp-controller="Flight" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+    <div>
+        <input type="radio" name="sortBy" id="Airline" value="Airline" 
+            checked="@ViewData["Airline"]" />
+        <label for="Airline">Airline</label>
+        <input type="radio" name="sortBy" id="ArrivalTime" value="ArrivalTime"
+               checked="@ViewData["ArrivalTime"]" />
+        <label for="ArrivalTime">ArrivalTime</label>
+        <input type="radio" name="sortBy" id="DepartureTime" value="DepartureTime"
+               checked="@ViewData["DepartTime"]" />
+        <label for="DepartureTime">DepartureTime</label>
+        <input type="radio" name="sortBy" id="Price" value="Price"
+               checked="@ViewData["Price"]" />
+        <label for="Price">Price</label>
+    </div>
+</form>
+
+<!-- Tomer's -->
+<table class="table">
+    <tr>
+        <th>
+            Airline
+        </th>
+        <th>
+            DepartureTime
+        </th>
+        <th>
+            ArrivalTime
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.FlightId" class="btn btn-info">Details</a>
+                <a asp-controller="Booking" asp-action="BookFlight" asp-route-id="@item.FlightId" class="btn btn-info">Book Flight</a>
+            </td>
+        </tr>
+    }
+</table>
+
+
+<a class="btn btn-primary" asp-area="" asp-controller="Flights" asp-action="Create">Add a Flight</a>
