@@ -26,7 +26,7 @@ namespace WebDevGroupProject.Controllers
                     service = _db.Hotels.Find(serviceId);
                     break;
                 case "carrental":
-                    service = _db.CarRentals.Find(serviceId);
+                    service = _db.Car_Rentals.Find(serviceId);
                     break;
                 default:
                     return NotFound();
@@ -38,46 +38,47 @@ namespace WebDevGroupProject.Controllers
             ViewBag.ServiceId = serviceId;
 
             return View("BookService");
+        }
 
-            [HttpPost]
-            public ActionResult ConfirmBooking(string serviceType, int serviceId, string passengerName)
+        [HttpPost]
+        public ActionResult ConfirmBooking(string serviceType, int serviceId, string passengerName)
+        {
+            DateTime bookingDateTime = DateTime.Now;
+            switch (serviceType.ToLower())
             {
-                DateTime bookingDateTime = DateTime.Now;
-                switch (serviceType.ToLower())
-                {
-                    case "flight":
-                        var flight = _db.Flights.Find(serviceId);
-                        if (flight != null) bookingDateTime = flight.DepartureTime;
-                        break;
-                    case "hotel":
+                case "flight":
+                    var flight = _db.Flights.Find(serviceId);
+                    if (flight != null) bookingDateTime = flight.DepartureTime;
+                    break;
+                case "hotel":
 
-                        break;
-                    case "carrental":
+                    break;
+                case "carrental":
 
-                        break;
-                    default:
-                        return NotFound();
-                }
-
-                var booking = new Booking
-                {
-                    ServiceType = serviceType,
-                    ServiceId = serviceId,
-                    PassengerName = passengerName,
-                    BookingDateTime = bookingDateTime
-                };
-
-                _db.Bookings.Add(booking);
-                _db.SaveChanges();
-
-                TempData["BookingMessage"] = $"Awesome! Booking confirmed for {passengerName} on {serviceType} {serviceId}.";
-                return RedirectToAction("Confirmation");
+                    break;
+                default:
+                    return NotFound();
             }
 
-
-            public ActionResult Confirmation()
+            var booking = new Booking
             {
-                return View();
-            }
+                ServiceType = serviceType,
+                ServiceId = serviceId,
+                PassengerName = passengerName,
+                BookingDateTime = bookingDateTime
+            };
+
+            _db.Bookings.Add(booking);
+            _db.SaveChanges();
+
+            TempData["BookingMessage"] = $"Awesome! Booking confirmed for {passengerName} on {serviceType} {serviceId}.";
+            return RedirectToAction("Confirmation");
+        }
+
+
+        public ActionResult Confirmation()
+        {
+            return View();
         }
     }
+}

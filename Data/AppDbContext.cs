@@ -14,5 +14,6 @@ namespace WebDevGroupProject.Data
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<GuestBooking> GuestBookings { get; set; }
     }
 }
