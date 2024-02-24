@@ -9,7 +9,7 @@ namespace WebDevGroupProject.Models
 		[Required]
 		public string HotelName { get; set; }
 		public string Location { get; set; }
-		public string Amenitites { get; set; }
-		public float Price { get; set; }
+		public string? Amenitites { get; set; }
+		public double? Price { get; set; }
 	}
 }

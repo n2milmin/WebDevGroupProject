@@ -1,75 +1,58 @@
 ﻿@model List<Car_Rental>
 @{
 	ViewData["Title"] = "Car_Rentals";
-	// Search parameters
-	bool searchPerformed = ViewData["SearchPerformed"] as bool? ?? false;
-	string searchString = ViewData["SearchString"] as string;
 }
 
 <h1>Car Rentals</h1>
 
-<br/>
-<div class="row">
-	<div class="col-sm-12">
-		<div class="form-check-inline pull-right">
-			<label>Search</label>
-			<input type="text" class="form-control" id="txtSearch" />
-		</div>
-	</div>
-	<div id="grdCars"></div>
-</div>
+<form asp-controller="Flight" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+    <div>
+        <input type="radio" name="sortBy" id="CompanyName" value="CompanyName"
+               checked="@ViewData["Company Name"]" />
+        <label for="CompanyName">CompanyName</label>
+        <input type="radio" name="sortBy" id="Location" value="Location"
+               checked="@ViewData["Location"]" />
+        <label for="Location">Location</label>
+        <input type="radio" name="sortBy" id="Model" value="Model"
+               checked="@ViewData["Model"]" />
+        <label for="Model">Model</label>
+        <input type="radio" name="sortBy" id="Pricing" value="Pricing"
+			   checked="@ViewData["Pricing"]" />
+		<label for="Pricing">Pricing</label>
+		<input type="radio" name="sortBy" id="Availability" value="Availability"
+			   checked="@ViewData["Availability"]" />
+		<label for="Availability">Availability</label>
+    </div>
+</form>
 
-<div class="form-group">
-	<table class="">
+<table class="table">
+	<thead>
 		<tr>
-			<td>
-				<span><b>Search by: </b></span>
-				@Html.RadioButton("searchBy", "CompanyName", true)
-				<text>Company Name</text>
-				@Html.RadioButton("searchBy", "Location", false)
-				<text>Location</text>
-				@Html.RadioButton("searchBy", "Model", false)
-				<text>Model</text>
-			</td>
+			<th>Company Name</th>
+			<th>Location</th>
+			<th>Model</th>
+			<th>Pricing</th>
+			<th>Availability</th>
 		</tr>
-		<tr>
-			<td>
-				<input class="form-control" type="text" placeholder="Search" name="searchString" />
-			</td>
-			<td>
-				<button class="btn btn-outline-primary" type="submit">Search</button>
-			</td>
-		</tr>
-		<tr>
-			@if (TempData.ContainsKey("infoMessage"))
-			{
-				<td>@TempData["infoMessage"].ToString()</td>
-			}
-		</tr>
-	</table>
-</div>
-
-
-<script>
-	$(() => {
-		getCars();
-
-		$('#txtSearch').on('keyup', () => {
-			getCars();
-		});
-	});
-
-	function getCars() {
-		$.ajax({
-			url.'@Url.Action("SearchCars", "C")',
-			dataType: 'html',
-			method: 'get',
-			data: { searchText: $('#txtSearch').val() },
-			success: function (res) {
-				$('#grdCars').html('').html(res);
-			},
-			error: function (err) {
-				console.log(err);
-			}
-		})
-</script>
+	</thead>
+	<tbody>
+		@foreach (var project in Model)
+		{
+			<tr>
+				<td>@project.CompanyName</td>
+				<td>@project.Location</td>
+				<td>@project.Model</td>
+				<td>@project.Pricing</td>
+				<td>@project.Availability</td>
+				<td>
+					<a asp-action="Details" asp-route-id="@project.RentalsId" class="btn btn-info">Details</a>
+					<a asp-controller="Booking" asp-action="BookCar" asp-route-projectId="@project.RentalsId" class="btn btn-warning">Book</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

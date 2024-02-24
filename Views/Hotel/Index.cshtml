@@ -1,0 +1,53 @@
+﻿@model List<Hotel>
+@{
+	ViewData["Title"] = "Hotels";
+}
+
+<h1>Hotels</h1>
+
+<form asp-controller="Hotel" asp-action="Index" method="get">
+	<p>
+		Title: <input type="text" name="searchString" />
+		<input type="submit" value="Filter" />
+	</p>
+	<div>
+		<input type="radio" name="sortBy" id="HotelName" value="HotelName"
+			   checked="@ViewData["HotelName"]" />
+		<label for="HotelName">HotelName</label>
+		<input type="radio" name="sortBy" id="Location" value="Location"
+			   checked="@ViewData["Location"]" />
+		<label for="Location">Location</label>
+		<input type="radio" name="sortBy" id="Amenitites" value="Amenitites"
+			   checked="@ViewData["Amenitites"]" />
+		<label for="Amenitites">Amenities</label>
+		<input type="radio" name="sortBy" id="Price" value="Price"
+			   checked="@ViewData["Price"]" />
+		<label for="Price">Price</label>
+	</div>
+</form>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Hotel Name</th>
+			<th>Location</th>
+			<th>Amenities</th>
+			<th>Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var project in Model)
+		{
+			<tr>
+				<td>@project.HotelName</td>
+				<td>@project.Location</td>
+				<td>@project.Amenitites</td>
+				<td>@project.Price</td>
+				<td>
+					<a asp-action="Details" asp-route-id="@project.HotelId" class="btn btn-info">Details</a>
+					<a asp-controller="Booking" asp-action="BookHotel" asp-route-projectId="@project.HotelId" class="btn btn-warning">Book</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
