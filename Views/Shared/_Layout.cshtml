@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/24.2.3/fluent.css" />
     <!-- Syncfusion ASP.NET MVC controls scripts -->
     <script src="https://cdn.syncfusion.com/ej2/24.2.3/dist/ej2.min.js"></script>
+
+    <!-- Syncfusion ASP.NET Core controls styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/24.2.3/fluent.css" />
+    <!-- Syncfusion ASP.NET Core controls scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/24.2.3/dist/ej2.min.js"></script>
+    <!-- Syncfusion ASP.NET Core Script Manager -->
+    <ejs-scripts></ejs-scripts>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+
 </head>
 <body>
     <header>
@@ -30,11 +39,25 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="GuestBooking" asp-action="Index">Guest Booking</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Flight" asp-action="Index">Flights</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Car_Rentals_" asp-action="Index">Car Rentals</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Advanced Search</a>
+                        </li>
+                        <!-- Search Form -->
+                        <form class="d-flex" asp-controller="Search" asp-action="GeneralSearch" method="get">
+                            <input class="form-control" type="text" placeholder="Search" name="searchString" />
+                            <select class="form-control btn btnalert-secondary dropdown-toggle" name="searchType">
+                                <option value="">Search Type</option>
+                                <option value="Flights">Flights</option>
+                                <option value="Hotels">Hotels</option>
+                                <option value="CarRentals">Car Rentals</option>
+                            </select>
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -53,7 +76,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/_references.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

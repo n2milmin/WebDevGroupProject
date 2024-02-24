@@ -10,6 +10,8 @@ namespace WebDevGroupProject.Data
 
         }
 
-        public DbSet<Search> Search { get; set; }
+        public DbSet<Car_Rentals> Car_Rentals { get; set; }
+        public DbSet<Flights> Flights { get; set; }
+        public DbSet<Hotels> Hotels { get; set; }
     }
 }

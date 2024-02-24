@@ -1,0 +1,75 @@
+﻿@model List<Car_Rentals>
+@{
+	ViewData["Title"] = "Car_Rentals";
+	// Search parameters
+	bool searchPerformed = ViewData["SearchPerformed"] as bool? ?? false;
+	string searchString = ViewData["SearchString"] as string;
+}
+
+<h1>Car Rentals</h1>
+
+<br/>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="form-check-inline pull-right">
+			<label>Search</label>
+			<input type="text" class="form-control" id="txtSearch" />
+		</div>
+	</div>
+	<div id="grdCars"></div>
+</div>
+
+<div class="form-group">
+	<table class="">
+		<tr>
+			<td>
+				<span><b>Search by: </b></span>
+				@Html.RadioButton("searchBy", "CompanyName", true)
+				<text>Company Name</text>
+				@Html.RadioButton("searchBy", "Location", false)
+				<text>Location</text>
+				@Html.RadioButton("searchBy", "Model", false)
+				<text>Model</text>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input class="form-control" type="text" placeholder="Search" name="searchString" />
+			</td>
+			<td>
+				<button class="btn btn-outline-primary" type="submit">Search</button>
+			</td>
+		</tr>
+		<tr>
+			@if (TempData.ContainsKey("infoMessage"))
+			{
+				<td>@TempData["infoMessage"].ToString()</td>
+			}
+		</tr>
+	</table>
+</div>
+
+
+<script>
+	$(() => {
+		getCars();
+
+		$('#txtSearch').on('keyup', () => {
+			getCars();
+		});
+	});
+
+	function getCars() {
+		$.ajax({
+			url.'@Url.Action("SearchCars", "C")',
+			dataType: 'html',
+			method: 'get',
+			data: { searchText: $('#txtSearch').val() },
+			success: function (res) {
+				$('#grdCars').html('').html(res);
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		})
+</script>

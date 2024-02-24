@@ -1,0 +1,52 @@
+﻿@model List<Flights>
+@{
+    ViewData["Title"] = "Flights";
+}
+<h1>Flights</h1>
+
+<p>
+    <a asp-action="">Create New</a>
+</p>
+
+<form asp-controller="Flight" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+    <div>
+        <input type="radio" name="sortBy" id="Airline" value="Airline" 
+            checked="@ViewData["Airline"]" />
+        <label for="Airline">Airline</label>
+        <input type="radio" name="sortBy" id="ArrivalTime" value="ArrivalTime"
+               checked="@ViewData["ArrivalTime"]" />
+        <label for="ArrivalTime">ArrivalTime</label>
+        <input type="radio" name="sortBy" id="DepartureTime" value="DepartureTime"
+               checked="@ViewData["DepartTime"]" />
+        <label for="DepartureTime">DepartureTime</label>
+        <input type="radio" name="sortBy" id="Price" value="Price"
+               checked="@ViewData["Price"]" />
+        <label for="Price">Price</label>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Airline</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Pricing</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.Airline</td>
+                <td>@x.ArrivalTime</td>
+                <td>@x.DepartureTime</td>
+                <td>@x.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
