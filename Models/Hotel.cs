@@ -2,7 +2,7 @@
 
 namespace WebDevGroupProject.Models
 {
-	public class Hotels
+	public class Hotel
 	{
 		[Key]
 		public int HotelId { get; set; }

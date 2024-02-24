@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebDevGroupProject.Data;
 using WebDevGroupProject.Models;
 
 namespace WebDevGroupProject.Controllers
@@ -15,9 +14,9 @@ namespace WebDevGroupProject.Controllers
 
         [HttpGet]
         public ActionResult BookFlight(int id)
-        {
+        {            
             Flight flight = _db.Flights.Find(id);
-            if (flight == null) return NotFound();
+            if (flight == null) return NotFound(); 
             ViewBag.ServiceType = "Flight";
             ViewBag.ServiceId = id;
             return View();
