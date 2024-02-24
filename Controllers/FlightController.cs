@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Syncfusion.EJ2.Buttons;
 using WebDevGroupProject.Data;
+using WebDevGroupProject.Migrations;
+using WebDevGroupProject.Models;
 
 namespace WebDevGroupProject.Controllers
 {
@@ -73,10 +74,37 @@ namespace WebDevGroupProject.Controllers
 
             return View(await flight.ToListAsync());
         }
-        [HttpPost]
-        public string Index(string searchString, bool notUsed)
+
+        [HttpGet]
+        public ActionResult Details(int id)
         {
-            return "From [HttpPost]Index: filter on " + searchString;
+            var flight = _db.Flights.Find(id);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+            return View(flight);
+        }
+
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost("Create")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Flight flight)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Flights.Add(flight);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(flight);
         }
     }
 }

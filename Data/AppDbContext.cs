@@ -10,8 +10,9 @@ namespace WebDevGroupProject.Data
 
         }
 
-        public DbSet<Car_Rentals> Car_Rentals { get; set; }
-        public DbSet<Flights> Flights { get; set; }
-        public DbSet<Hotels> Hotels { get; set; }
+        public DbSet<Car_Rental> Car_Rentals { get; set; }
+        public DbSet<Flight> Flights { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 }
