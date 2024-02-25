@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebDevGroupProject.Data;
+using WebDevGroupProject.Migrations;
 using WebDevGroupProject.Models;
 
 namespace WebDevGroupProject.Controllers
@@ -12,7 +13,6 @@ namespace WebDevGroupProject.Controllers
         {
             _db = db;
         }
-
 
 		[HttpGet]
 		public ActionResult BookFlight(int id)
@@ -38,38 +38,37 @@ namespace WebDevGroupProject.Controllers
 			};
 			_db.Bookings.Add(booking);
 			_db.SaveChanges();
-			TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {id}.";
+			TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {flight.Airline}.";
 			return RedirectToAction("Confirmation");
 		}
 
+		[HttpGet]
+		public ActionResult BookCar(int id)
+		{
+			Car_Rental car = _db.Car_Rentals.Find(id);
+			if (car == null) return NotFound();
+			ViewBag.ServiceType = "car";
+			ViewBag.ServiceId = id;
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult BookCar(int id, string passengerName)
+		{
+			Car_Rental car = _db.Car_Rentals.Find(id);
+			Booking booking = new Booking
+			{
+				ServiceType = "Car",
+				ServiceId = id,
+				PassengerName = passengerName,
+				BookingDateTime = car.Availability
+			};
+			_db.Bookings.Add(booking);
+			_db.SaveChanges();
+			TempData["BookingMessage"] = $"Booking confirmed for {car.CompanyName} by {passengerName}.";
+			return RedirectToAction("Confirmation");
+		}
 		/*
-         *  [HttpGet]
-         public ActionResult BookCar(int id)
-         {
-             CarRentals car = _db.CarRentals.Find(id);
-             if (car == null) return NotFound();
-             ViewBag.ServiceType = "car";
-             ViewBag.ServiceId = id;
-             return View();
-         }
-
-         [HttpPost]
-         public ActionResult BookCar(int id, string CompanyName)
-         {
-             Flight flight = _db.Flights.Find(id);
-             Booking booking = new Booking
-             {
-                 ServiceType = "Flight",
-                 ServiceId = id,
-                 PassengerName = CompanyName,
-                 BookingDateTime = CarRentals.Availability
-             };
-             _db.Bookings.Add(booking);
-             _db.SaveChanges();
-             TempData["BookingMessage"] = $"Booking confirmed for {CompanyName} on Car: {id}.";
-             return RedirectToAction("Confirmation");
-         }
-
          [HttpGet]
          public ActionResult BookHotels(int id)
          {
