@@ -22,6 +22,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					car = car.Where(s => s.Location!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = car.OrderBy(x => x.Location);
 				car = results;
@@ -36,6 +37,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					car = car.Where(s => s.Model!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = car.OrderBy(x => x.Model);
 				car = results;
@@ -50,6 +52,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					car = car.Where(s => s.Pricing.ToString()!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = car.OrderBy(x => x.Pricing);
 				car = results;
@@ -64,6 +67,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					car = car.Where(s => s.CompanyName!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = car.OrderBy(x => x.CompanyName);
 				car = results;

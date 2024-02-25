@@ -24,6 +24,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					hotel = hotel.Where(s => s.Location!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = hotel.OrderBy(x => x.Location);
 				hotel = results;
@@ -37,6 +38,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					hotel = hotel.Where(s => s.Amenitites!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = hotel.OrderBy(x => x.Amenitites);
 				hotel = results;
@@ -50,6 +52,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					hotel = hotel.Where(s => s.Price.ToString()!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = hotel.OrderBy(x => x.Price);
 				hotel = results;
@@ -63,6 +66,7 @@ namespace WebDevGroupProject.Controllers
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					hotel = hotel.Where(s => s.HotelName!.Contains(searchString));
+					ViewData["searchString"] = searchString;
 				}
 				var results = hotel.OrderBy(x => x.HotelName);
 				hotel = results;

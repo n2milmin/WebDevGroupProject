@@ -13,37 +13,97 @@ namespace WebDevGroupProject.Controllers
             _db = db;
         }
 
-        [HttpGet]
-        public ActionResult BookFlight(int id)
-        {
-            Flight flight = _db.Flights.Find(id);
-            if (flight == null) return NotFound();
-            ViewBag.ServiceType = "Flight";
-            ViewBag.ServiceId = id;
-            return View();
-        }
 
-        [HttpPost]
-        public ActionResult BookFlight(int id, string passengerName)
-        {
-            Flight flight = _db.Flights.Find(id);
-            Booking booking = new Booking
-            {
-                ServiceType = "Flight",
-                ServiceId = id,
-                PassengerName = passengerName,
-                BookingDateTime = flight.DepartureTime
-            };
-            _db.Bookings.Add(booking);
-            _db.SaveChanges();
-            TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {id}.";
-            return RedirectToAction("Confirmation");
-        }
+		[HttpGet]
+		public ActionResult BookFlight(int id)
+		{
+			Flight flight = _db.Flights.Find(id);
+			if (flight == null) return NotFound();
+			ViewBag.ServiceType = "Flight";
+			ViewBag.ServiceId = id;
+			return View();
+		}
 
-        [HttpGet]
-        public ActionResult Confirmation()
-        {
-            return View();
-        }
-    }
+
+		[HttpPost]
+		public ActionResult BookFlight(int id, string passengerName)
+		{
+			Flight flight = _db.Flights.Find(id);
+			Booking booking = new Booking
+			{
+				ServiceType = "Flight",
+				ServiceId = id,
+				PassengerName = passengerName,
+				BookingDateTime = flight.DepartureTime
+			};
+			_db.Bookings.Add(booking);
+			_db.SaveChanges();
+			TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {id}.";
+			return RedirectToAction("Confirmation");
+		}
+
+		/*
+         *  [HttpGet]
+         public ActionResult BookCar(int id)
+         {
+             CarRentals car = _db.CarRentals.Find(id);
+             if (car == null) return NotFound();
+             ViewBag.ServiceType = "car";
+             ViewBag.ServiceId = id;
+             return View();
+         }
+
+         [HttpPost]
+         public ActionResult BookCar(int id, string CompanyName)
+         {
+             Flight flight = _db.Flights.Find(id);
+             Booking booking = new Booking
+             {
+                 ServiceType = "Flight",
+                 ServiceId = id,
+                 PassengerName = CompanyName,
+                 BookingDateTime = CarRentals.Availability
+             };
+             _db.Bookings.Add(booking);
+             _db.SaveChanges();
+             TempData["BookingMessage"] = $"Booking confirmed for {CompanyName} on Car: {id}.";
+             return RedirectToAction("Confirmation");
+         }
+
+         [HttpGet]
+         public ActionResult BookHotels(int id)
+         {
+             Hotels Hotel = _db.Hotel.Find(id);
+             if (Hotel == null) return NotFound();
+             ViewBag.ServiceType = "Hotel";
+             ViewBag.ServiceId = id;
+             return View();
+         }
+
+
+         [HttpPost]
+         public ActionResult BookHotels(int id, string HotelName)
+         {
+             Flight flight = _db.Flights.Find(id);
+             Booking booking = new Booking
+             {
+                 ServiceType = "Flight",
+                 ServiceId = id,
+                 PassengerName = HotelName,
+                 BookingDateTime = HotelName.Availability
+             };
+             _db.Bookings.Add(booking);
+             _db.SaveChanges();
+             TempData["BookingMessage"] = $"Booking confirmed for {HotelName} Date: {HotelName.Availability}.";
+             return RedirectToAction("Confirmation");
+         }
+         */
+
+		[HttpGet]
+		public ActionResult Confirmation()
+		{
+			return View();
+		}
+
+	}
 }

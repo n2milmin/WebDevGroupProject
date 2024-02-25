@@ -1,30 +1,87 @@
-﻿@model Search
+﻿@model dynamic
 @{
 	ViewData["Title"] = "Search";
 }
 
 <h1>Search</h1>
 
+<div>
+<!-- Tomer's -->
+<table class="table">
+    <tr>
+        <th>Airline </th>
+        <th>Departure Time</th>
+        <th>ArrivalTime</th>
+        <th>Price</th>
+    </tr>
 
-<form class="form-group" method="get">
-	<textarea class="d-inline" asp-for="searchValue" placeholder="Search by keyword"></textarea>
+    @foreach (Flight flight in Model.Flights)
+    {
+		<tr>
+			<td>@flight.Airline</td>
+			<td>@flight.DepartureTime</td>
+			<td>@flight.ArrivalTime</td>
+			<td>@flight.Price</td>
+			<td>
+				<a asp-controller="Flight" asp-action="Details" asp-route-id="@flight.FlightId" class="btn btn-info">Details</a>
+				<a asp-controller="Booking" asp-action="BookFlight" asp-route-projectId="@flight.FlightId" class="btn btn-warning">Book</a>
+			</td>
+		</tr>
+    }
+</table>
 
-	<select class="form-control btn btn-outline dropdown-toggle" placeholder="Select Type" name="searchType">
-		<option value="">Select Type</option>
-		<option value="Flights">Flights</option>
-		<option value="Hotels">Hotels</option>
-		<option value="CarRentals">Car Rentals</option>
-	</select>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Hotel Name</th>
+			<th>Location</th>
+			<th>Amenities</th>
+			<th>Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Hotel hotel in Model.Hotels)
+		{
+			<tr>
+				<td>@hotel.HotelName</td>
+				<td>@hotel.Location</td>
+				<td>@hotel.Amenitites</td>
+				<td>@hotel.Price</td>
+				<td>
+					<a asp-controller="Hotel" asp-action="Details" asp-route-id="@hotel.HotelId" class="btn btn-info">Details</a>
+					<a asp-controller="Booking" asp-action="BookHotel" asp-route-projectId="@hotel.HotelId" class="btn btn-warning">Book</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
 
-	<textarea class="d-inline" asp-for="location" placeholder="Location"></textarea>
-	<textarea class="d-inline" asp-for="carModel" placeholder="Car Model"></textarea>
-
-	<button class="btn btn-primary" asp-controller="Search" asp-action="GeneralSearch" type="submit">Search</button>
-</form>
-
-
-@section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
-}
+<table class="table">
+	<h3>Car Rentals</h3>
+	<thead>
+		<tr>
+			<th>Company Name</th>
+			<th>Location</th>
+			<th>Model</th>
+			<th>Pricing</th>
+			<th>Availability</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Car_Rental car in Model.Car_Rentals)
+		{
+			<tr>
+				<td>@car.CompanyName</td>
+				<td>@car.Location</td>
+				<td>@car.Model</td>
+				<td>@car.Pricing</td>
+				<td>@car.Availability</td>
+				<td>
+					<a asp-action="Details" asp-route-id="@car.RentalsId" class="btn btn-info">Details</a>
+					<a asp-controller="Booking" asp-action="BookCar" asp-route-projectId="@car.RentalsId" class="btn btn-warning">Book</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+</div>

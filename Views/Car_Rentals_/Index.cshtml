@@ -7,12 +7,12 @@
 
 <form asp-controller="Flight" asp-action="Index" method="get">
     <p>
-        Title: <input type="text" name="searchString" />
+		Search: <input type="text" name="searchString" value="@ViewData["searchString"]" />
         <input type="submit" value="Filter" />
     </p>
     <div>
         <input type="radio" name="sortBy" id="CompanyName" value="CompanyName"
-               checked="@ViewData["Company Name"]" />
+               checked="@ViewData["CompanyName"]" />
         <label for="CompanyName">CompanyName</label>
         <input type="radio" name="sortBy" id="Location" value="Location"
                checked="@ViewData["Location"]" />

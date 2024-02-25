@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Syncfusion.EJ2.Lists;
 using System.Diagnostics;
+using WebDevGroupProject.Data;
 using WebDevGroupProject.Models;
 
 namespace WebDevGroupProject.Controllers
@@ -7,18 +9,44 @@ namespace WebDevGroupProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+		private readonly AppDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
-        }
+			_db = context;
+		}
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		public IActionResult Index(string searchString, string sortBy)
+		{
+			if (!string.IsNullOrEmpty(searchString))
+			{
+				if (sortBy == "Flights")
+				{
+					return RedirectToAction("Index", "Flight", searchString);
+				}
+				else if (sortBy == "Hotels")
+				{
+					return RedirectToAction("Index", "Hotel", searchString);
+				}
+				else if (sortBy == "CarRentals")
+				{
+					return RedirectToAction("Index", "Car_Rentals_", searchString);
+				}
+				else
+				{
+					return RedirectToAction("Index", "Search", searchString);
+				}
+			}
 
-        public IActionResult Privacy()
+			ViewData["All"] = true;
+			ViewData["Flights"] = false;
+			ViewData["Hotels"] = false;
+			ViewData["CarRentals"] = false;
+			return View();
+		}
+
+		public IActionResult Privacy()
         {
             return View();
         }
