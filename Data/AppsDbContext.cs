@@ -12,5 +12,5 @@ public class AppDbContext : DbContext
     public DbSet<Flight> Flights { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<CarRental> CarRentals { get; set; }
-
+    public DbSet<Hotel> Hotels { get; set; }
 }
