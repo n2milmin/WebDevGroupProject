@@ -17,7 +17,6 @@ namespace WebDevGroupProject.Controllers
         {
             var flight = from x in _db.Flights select x;
 
-
             if (sortBy == "ArrivalTime")
             {
                 if (!String.IsNullOrEmpty(searchString))

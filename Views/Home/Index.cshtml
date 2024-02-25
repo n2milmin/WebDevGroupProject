@@ -7,15 +7,12 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<form asp-controller="Hotel" asp-action="Index" method="get">
+<form asp-controller="Home" asp-action="Index" method="get">
 	<p>
 		Search: <input type="text" name="searchString" />
-		<input type="submit" value="Filter" />
+		<input type="submit" value="Search" />
 	</p>
 	<div>
-		<input type="radio" name="sortBy" id="All" value="All"
-			   checked="@ViewData["All"]" />
-		<label for="All">All</label>
 		<input type="radio" name="sortBy" id="Flights" value="Flights"
 			   checked="@ViewData["Flights"]" />
 		<label for="Flights">Flights</label>
@@ -27,3 +24,12 @@
 		<label for="CarRentals">CarRentals</label>
 	</div>
 </form>
+
+@if (!string.IsNullOrEmpty(ViewData["ErrMsg"].ToString()))
+{
+	<p>@ViewData["ErrMsg"]</p>
+}
+else if (!string.IsNullOrEmpty(ViewData["NoInput"].ToString()))
+{
+	<p>@ViewData["NoInput"]</p>
+}

@@ -1,24 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using WebDevGroupProject.Migrations;
 
 namespace WebDevGroupProject.Models
 {
-    public class Search
-    {
-        [Required]
-        public string? searchType { get; set; }
-        public string? searchValue { get; set; }
-        public string? location { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? startDate { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? endDate { get; set; }
-        public int? passengerAmount { get; set; }
-        [DataType(DataType.Time)]
-        public DateTime? flightTimes { get; set; }
-        public double? hotelRating { get; set; }
-        public string? carModel { get; set; }
-        public int? maxPrice { get; set; }
-        public int? minPrice { get; set; }
-    }
+	public class Search
+	{
+		public List<Flight> Flights { get; set; }
+		public List<Hotel> Hotels { get; set; }
+		public List<Car_Rental> Car_Rentals { get; set; }
+
+		public Search(List<Flight> flights, List<Hotel> hotels, List<Car_Rental> car_Rentals)
+		{
+			Flights = flights;
+			Hotels = hotels;
+			Car_Rentals = car_Rentals;
+		}
+	}
 }

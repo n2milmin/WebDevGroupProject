@@ -5,7 +5,7 @@
 
 <h1>Car Rentals</h1>
 
-<form asp-controller="Flight" asp-action="Index" method="get">
+<form asp-controller="Car_Rentals_" asp-action="Index" method="get">
     <p>
 		Search: <input type="text" name="searchString" value="@ViewData["searchString"]" />
         <input type="submit" value="Filter" />
@@ -50,7 +50,7 @@
 				<td>@project.Availability</td>
 				<td>
 					<a asp-action="Details" asp-route-id="@project.RentalsId" class="btn btn-info">Details</a>
-					<a asp-controller="Booking" asp-action="BookCar" asp-route-projectId="@project.RentalsId" class="btn btn-warning">Book</a>
+					<a asp-controller="Booking" asp-action="BookCar" asp-route-id="@project.RentalsId" class="btn btn-warning">Book</a>
 				</td>
 			</tr>
 		}

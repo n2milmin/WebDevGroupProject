@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Syncfusion.EJ2.Lists;
 using System.Diagnostics;
 using WebDevGroupProject.Data;
@@ -17,29 +18,44 @@ namespace WebDevGroupProject.Controllers
 			_db = context;
 		}
 
+		public IActionResult Index()
+		{
+			ViewData["ErrMsg"] = "";
+			ViewData["NoInput"] = "";
+			return View();
+		}
+
+		[HttpGet("Search/{searchString?}")]
 		public IActionResult Index(string searchString, string sortBy)
 		{
+			ViewData["ErrMsg"] = "";
+			ViewData["NoInput"] = "";
+			@ViewData["searchString"] = searchString;
+
 			if (!string.IsNullOrEmpty(searchString))
 			{
 				if (sortBy == "Flights")
 				{
-					return RedirectToAction("Index", "Flight", searchString);
+					ViewData["Airline"] = true;
+					return RedirectToAction("Index", "Flight", new { searchString });
 				}
 				else if (sortBy == "Hotels")
 				{
-					return RedirectToAction("Index", "Hotel", searchString);
+					ViewData["HotelName"] = true;
+					return RedirectToAction("Index", "Hotel", new { searchString });
 				}
 				else if (sortBy == "CarRentals")
 				{
-					return RedirectToAction("Index", "Car_Rentals_", searchString);
+					ViewData["CompanyName"] = true;
+					return RedirectToAction("Index", "Car_Rentals_", new { searchString });
 				}
 				else
 				{
-					return RedirectToAction("Index", "Search", searchString);
+					ViewData["ErrMsg"] = "Please specify the search parameters";
 				}
 			}
 
-			ViewData["All"] = true;
+			ViewData["NoInput"] = "Please enter something to search.";
 			ViewData["Flights"] = false;
 			ViewData["Hotels"] = false;
 			ViewData["CarRentals"] = false;
