@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebDevGroupProject.Data;
-using WebDevGroupProject.Migrations;
 using WebDevGroupProject.Models;
 
 namespace WebDevGroupProject.Controllers
@@ -18,14 +17,14 @@ namespace WebDevGroupProject.Controllers
         {
             var flight = from x in _db.Flights select x;
 
-
             if (sortBy == "ArrivalTime")
             {
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     flight = flight.Where(s => s.ArrivalTime!.ToString().Contains(searchString));
-                }
-                var results = flight.OrderBy(x => x.ArrivalTime);
+					ViewData["searchString"] = searchString;
+				}
+				var results = flight.OrderBy(x => x.ArrivalTime);
                 flight = results;
                 ViewData["Airline"] = false;
                 ViewData["ArrivalTime"] = true;
@@ -37,8 +36,9 @@ namespace WebDevGroupProject.Controllers
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     flight = flight.Where(s => s.DepartureTime!.ToString().Contains(searchString));
-                }
-                var results = flight.OrderBy(x => x.DepartureTime);
+					ViewData["searchString"] = searchString;
+				}
+				var results = flight.OrderBy(x => x.DepartureTime);
                 flight = results;
                 ViewData["Airline"] = false;
                 ViewData["ArrivalTime"] = false;
@@ -50,8 +50,9 @@ namespace WebDevGroupProject.Controllers
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     flight = flight.Where(s => s.Price.ToString()!.Contains(searchString));
-                }
-                var results = flight.OrderBy(x => x.Price);
+					ViewData["searchString"] = searchString;
+				}
+				var results = flight.OrderBy(x => x.Price);
                 flight = results;
                 ViewData["Airline"] = false;
                 ViewData["ArrivalTime"] = false;
@@ -63,6 +64,7 @@ namespace WebDevGroupProject.Controllers
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     flight = flight.Where(s => s.Airline!.Contains(searchString));
+                    ViewData["searchString"] = searchString;
                 } 
                 var results = flight.OrderBy(x => x.Airline);
                 flight = results;
@@ -70,9 +72,9 @@ namespace WebDevGroupProject.Controllers
                 ViewData["ArrivalTime"] = false;
                 ViewData["DepartTime"] = false;
                 ViewData["Price"] = false;
-            }
+			}
 
-            return View(await flight.ToListAsync());
+			return View(await flight.ToListAsync());
         }
 
         [HttpGet]
