@@ -14,7 +14,8 @@ namespace WebDevGroupProject.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<Hotel> hotel = _db.Hotels.ToList();
+            return View(hotel);
         }
 
         public ActionResult Details(int id)

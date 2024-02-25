@@ -66,11 +66,11 @@ namespace WebDevGroupProject.Controllers
              TempData["BookingMessage"] = $"Booking confirmed for {car.CompanyName} by {passengerName}.";
              return RedirectToAction("Confirmation");
          }
-        /*
+        
          [HttpGet]
          public ActionResult BookHotels(int id)
          {
-             Hotels Hotel = _db.Hotel.Find(id);
+             Hotel Hotel = _db.Hotels.Find(id);
              if (Hotel == null) return NotFound();
              ViewBag.ServiceType = "Hotel";
              ViewBag.ServiceId = id;
@@ -79,22 +79,22 @@ namespace WebDevGroupProject.Controllers
 
 
          [HttpPost]
-         public ActionResult BookHotels(int id, string HotelName)
+         public ActionResult BookHotels(int id, string passengerName)
          {
-             Flight flight = _db.Flights.Find(id);
-             Booking booking = new Booking
+            Hotel Hotel = _db.Hotels.Find(id);
+            Booking booking = new Booking
              {
-                 ServiceType = "Flight",
+                 ServiceType = "Hotels",
                  ServiceId = id,
-                 PassengerName = HotelName,
-                 BookingDateTime = HotelName.Availability
+                 PassengerName = passengerName,
+                 BookingDateTime = DateTime.Now
              };
              _db.Bookings.Add(booking);
              _db.SaveChanges();
-             TempData["BookingMessage"] = $"Booking confirmed for {HotelName} Date: {HotelName.Availability}.";
+             TempData["BookingMessage"] = $"Booking confirmed for {passengerName} In Hotel: {Hotel.HotelName}.";
              return RedirectToAction("Confirmation");
          }
-         */
+         
 
         [HttpGet]
         public ActionResult Confirmation()
