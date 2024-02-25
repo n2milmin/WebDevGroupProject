@@ -36,15 +36,14 @@ namespace WebDevGroupProject.Controllers
             };
             _db.Bookings.Add(booking);
             _db.SaveChanges();
-            TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {id}.";
+            TempData["BookingMessage"] = $"Booking confirmed for {passengerName} on flight {flight.Airline}.";
             return RedirectToAction("Confirmation");
         }
 
-        /*
-         *  [HttpGet]
+        [HttpGet]
          public ActionResult BookCar(int id)
          {
-             CarRentals car = _db.CarRentals.Find(id);
+             CarRental car = _db.CarRentals.Find(id);
              if (car == null) return NotFound();
              ViewBag.ServiceType = "car";
              ViewBag.ServiceId = id;
@@ -52,22 +51,22 @@ namespace WebDevGroupProject.Controllers
          }
 
          [HttpPost]
-         public ActionResult BookCar(int id, string CompanyName)
+         public ActionResult BookCar(int id, string passengerName)
          {
-             Flight flight = _db.Flights.Find(id);
-             Booking booking = new Booking
+            CarRental car = _db.CarRentals.Find(id);
+            Booking booking = new Booking
              {
-                 ServiceType = "Flight",
+                 ServiceType = "Car",
                  ServiceId = id,
-                 PassengerName = CompanyName,
-                 BookingDateTime = CarRentals.Availability
+                 PassengerName = passengerName,
+                 BookingDateTime = car.Availability
              };
              _db.Bookings.Add(booking);
              _db.SaveChanges();
-             TempData["BookingMessage"] = $"Booking confirmed for {CompanyName} on Car: {id}.";
+             TempData["BookingMessage"] = $"Booking confirmed for {car.CompanyName} by {passengerName}.";
              return RedirectToAction("Confirmation");
          }
-
+        /*
          [HttpGet]
          public ActionResult BookHotels(int id)
          {

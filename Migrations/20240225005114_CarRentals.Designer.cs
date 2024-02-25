@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebDevGroupProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240222154217_Bookings")]
-    partial class Bookings
+    [Migration("20240225005114_CarRentals")]
+    partial class CarRentals
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,37 @@ namespace WebDevGroupProject.Migrations
                     b.HasKey("BookingId");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("WebDevGroupProject.Models.CarRental", b =>
+                {
+                    b.Property<int>("RentalsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RentalsId"));
+
+                    b.Property<DateTime>("Availability")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Pricing")
+                        .HasColumnType("float");
+
+                    b.HasKey("RentalsId");
+
+                    b.ToTable("CarRentals");
                 });
 
             modelBuilder.Entity("WebDevGroupProject.Models.Flight", b =>

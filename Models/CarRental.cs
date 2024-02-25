@@ -2,7 +2,7 @@
 
 namespace WebDevGroupProject.Models
 {
-    public class CarRentals
+    public class CarRental
     {
         [Key]
         public int RentalsId { get; set; }
