@@ -1,5 +1,6 @@
 ﻿using WebDevGroupProject.Models;
 using Microsoft.EntityFrameworkCore;
+using WebDevGroupProject.Migrations;
 
 public class AppDbContext : DbContext
 {
@@ -10,4 +11,5 @@ public class AppDbContext : DbContext
     }
     public DbSet<Flight> Flights { get; set; }
     public DbSet<Booking> Bookings { get; set; }
+
 }
