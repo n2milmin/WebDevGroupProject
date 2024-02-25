@@ -1,4 +1,4 @@
-﻿@model List<Flight>
+@model List<Flight>
 @{
     ViewData["Title"] = "Flights";
 }
@@ -7,7 +7,7 @@
 <!-- Nicole's -->
 <form asp-controller="Flight" asp-action="Index" method="get">
     <p>
-        Title: <input type="text" name="searchString" />
+        Title: <input type="text" name="searchString" value="@ViewData["searchString"]" />
         <input type="submit" value="Filter" />
     </p>
     <div>
