@@ -13,75 +13,72 @@ namespace WebDevGroupProject.Controllers
 		{
 			_db = context;
 		}
-		public IActionResult Index()
+	public async Task<IActionResult> Index(string searchString, string sortBy)
+	{
+		var car = from x in _db.Car_Rentals select x;
+	
+		if (sortBy == "Location")
 		{
-			var ordered = _db.Car_Rentals.OrderBy(x => x.CompanyName).ToList();
-			return View(ordered);
-		}
-
-		public PartialViewResult SearchCars(string searchText)
-		{
-			var result = _db.Car_Rentals.Where(x => x.CompanyName.Contains(searchText.ToLower())
-				|| x.Location.Contains(searchText.ToLower())
-				|| x.Model.Contains(searchText.ToLower())).ToList();
-			return PartialView("GridView", result);
-		}
-
-
-		[HttpGet("Search/{searchString?}")]
-		public async Task<IActionResult> Search(string searchString)
-		{
-			var query = from x in _db.Car_Rentals select x;
-			bool searchPerformed = !String.IsNullOrEmpty(searchString);
-			if (searchPerformed)
+			if (!String.IsNullOrEmpty(searchString))
 			{
-				query = query.Where(x => x.CompanyName.Contains(searchString) 
-						|| x.Location.Contains(searchString) 
-						|| x.Model.Contains(searchString));
-				var car = await query.ToListAsync();
-				ViewData["SearchPerformed"] = searchPerformed;
-				ViewData["SearchString"] = searchString;
-				return View("Index",car);
+				car = car.Where(s => s.Location!.Contains(searchString));
+				ViewData["searchString"] = searchString;
 			}
-			return View();
+			var results = car.OrderBy(x => x.Location);
+			car = results;
+			ViewData["CompanyName"] = false;
+			ViewData["Location"] = true;
+			ViewData["Model"] = false;
+			ViewData["Availability"] = false;
+			ViewData["Pricing"] = false;
 		}
-
-		public IActionResult CarSearch(string searchBy, string searchValue)
+		else if (sortBy == "Model")
 		{
-			try
+			if (!String.IsNullOrEmpty(searchString))
 			{
-				var cars = _db.Car_Rentals.ToList();
-				if (string.IsNullOrEmpty(searchValue))
-				{
-					if(searchBy.ToLower() == "CompanyName")
-					{
-						var searchByCompany = cars.Where(x => x.CompanyName.ToLower()
-							.Contains(searchValue.ToLower()));
-						return View(searchByCompany);
-					}
-					else if(searchBy.ToLower() == "Location")
-					{
-						var searchByCompany = cars.Where(x => x.Location.ToLower()
-							.Contains(searchValue.ToLower()));
-						return View(searchByCompany);
-					}
-					else if (searchBy.ToLower() == "Model")
-					{
-						var searchByCompany = cars.Where(x => x.Model.ToLower()
-							.Contains(searchValue.ToLower()));
-						return View(searchByCompany);
-					}
-					else
-					{
-						TempData["InfoMessage"] = "No information found to match search.";
-					}
-				}
+				car = car.Where(s => s.Model!.Contains(searchString));
+				ViewData["searchString"] = searchString;
 			}
-			catch
+			var results = car.OrderBy(x => x.Model);
+			car = results;
+			ViewData["CompanyName"] = false;
+			ViewData["Location"] = false;
+			ViewData["Model"] = true;
+			ViewData["Availability"] = false;
+			ViewData["Pricing"] = false;
+		}
+		else if (sortBy == "Pricing")
+		{
+			if (!String.IsNullOrEmpty(searchString))
 			{
-				return RedirectToAction("Index");
+				car = car.Where(s => s.Pricing.ToString()!.Contains(searchString));
+				ViewData["searchString"] = searchString;
 			}
-			return RedirectToAction("Index");
+			var results = car.OrderBy(x => x.Pricing);
+			car = results;
+			ViewData["CompanyName"] = false;
+			ViewData["Location"] = false;
+			ViewData["Model"] = false;
+			ViewData["Availability"] = false;
+			ViewData["Pricing"] = true;
+		}
+		else
+		{
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				car = car.Where(s => s.CompanyName!.Contains(searchString));
+				ViewData["searchString"] = searchString;
+			}
+			var results = car.OrderBy(x => x.CompanyName);
+			car = results;
+			ViewData["CompanyName"] = true;
+			ViewData["Location"] = false;
+			ViewData["Model"] = false;
+			ViewData["Availability"] = false;
+			ViewData["Pricing"] = false;
+		}
+	
+		return View(await car.ToListAsync());
 		}
 	}
 }
