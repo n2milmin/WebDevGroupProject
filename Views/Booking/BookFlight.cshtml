@@ -1,4 +1,4 @@
-﻿@model WebDevGroupProject.Models.Booking
+@model WebDevGroupProject.Models.Booking
 
 @{
     ViewBag.Title = "Book Flight";
@@ -8,7 +8,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.ServiceId)
+    @Html.HiddenFor(model => model.ServiceId) 
     <div class="form-group">
         @Html.LabelFor(model => model.PassengerName)
         @Html.TextBoxFor(model => model.PassengerName, new { @class = "form-control" })
@@ -18,7 +18,5 @@
 }
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
