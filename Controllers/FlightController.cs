@@ -96,17 +96,17 @@ namespace WebDevGroupProject.Controllers
         }
 
 
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Flight flight)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Flights.Add(flight);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(flight);
-        }
+        [HttpPost]
+	[ValidateAntiForgeryToken]
+	public ActionResult Create(Flight flight)
+	{
+	    if (ModelState.IsValid)
+	    {
+	        _db.Flights.Add(flight);
+	        _db.SaveChanges();
+	        return RedirectToAction("Index");
+	    }
+	    return View(flight);
+	}
     }
 }
