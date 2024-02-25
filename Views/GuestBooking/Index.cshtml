@@ -1,7 +1,50 @@
-﻿
+﻿@model WebDevGroupProject.Models.Booking
+
 @{
-    ViewData["Title"] = "GuestBookingIndex";
+    ViewData["Title"] = "Guest Booking";
+    var serviceType = ViewBag.ServiceType as string;
+    var serviceId = ViewBag.ServiceId as int?;
 }
 
-<h1>GuestBookingIndex</h1>
+<h1>Guest Booking for @serviceType</h1>
 
+<p>Please fill out the details to book your chosen service.</p>
+
+<form asp-controller="GuestBooking" asp-action="ConfirmBooking" method="post">
+
+    @if (!String.IsNullOrEmpty(serviceType) && serviceId.HasValue && serviceId > 0)
+    {
+        <input type="hidden" name="serviceType" value="@serviceType" />
+        <input type="hidden" name="serviceId" value="@serviceId" />
+
+        <div>
+            <label for="passengerName">Name:</label>
+            <input type="text" id="passengerName" name="passengerName" required />
+            <br />
+
+            @if (serviceType.ToLower() == "carrental")
+            {
+                <label for="pickupDate">Pickup Date:</label>
+                <input type="date" id="pickupDate" name="pickupDate" required />
+                <br />
+                <label for="dropOffDate">Drop Off Date:</label>
+                <input type="date" id="dropOffDate" name="dropOffDate" required />
+                <br />
+                <label for="driverLicense">Driver's License Number:</label>
+                <input type="text" id="driverLicense" name="driverLicense" required />
+            }
+        </div>
+    }
+    else
+    {
+        <p>Error: Service type and ID not provided or invalid.</p>
+    }
+
+    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+
+</form>
+
+@if (TempData["BookingMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["BookingMessage"]</div>
+}

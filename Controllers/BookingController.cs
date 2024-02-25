@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using WebDevGroupProject.Models;
+using WebDevGroupProject.Data;
 
 namespace WebDevGroupProject.Controllers
 {
     public class BookingController : Controller
     {
         private readonly AppDbContext _db;
-
+    
         public BookingController(AppDbContext db)
         {
             _db = db;

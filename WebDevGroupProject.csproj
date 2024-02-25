@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Booking\BookHotel.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
@@ -24,6 +28,10 @@
 
 	<ItemGroup>
 		<Folder Include="Data\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Views\Booking\BookHotel.cshtml" />
 	</ItemGroup>
 
 </Project>
