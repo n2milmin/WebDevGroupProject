@@ -26,7 +26,7 @@ namespace WebDevGroupProject.Controllers
                     service = _db.Hotels.Find(serviceId);
                     break;
                 case "carrental":
-                    service = _db.CarRentals.Find(serviceId);
+                    service = _db.Car_Rentals.Find(serviceId);
                     break;
                 default:
                     return NotFound();
@@ -38,7 +38,7 @@ namespace WebDevGroupProject.Controllers
             ViewBag.ServiceId = serviceId;
 
             return View("BookService");
-
+        }
             [HttpPost]
             public ActionResult ConfirmBooking(string serviceType, int serviceId, string passengerName)
             {
